@@ -1,33 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Stellar Lumens Paper wallet generator</title>
+  <title>Stellar Lumens Paper Wallet Generator</title>
   <!-- You can diff: https://raw.githubusercontent.com/stellar/bower-js-stellar-base/f7ed5511dc880769e96cd945e1d2b6c2151cf8b7/stellar-base.min.js -->
   <script type="text/javascript" src="stellar-base.min.js"></script>
   <!-- You can diff: https://raw.githubusercontent.com/davidshimjs/qrcodejs/04f46c6a0708418cb7b96fc563eacae0fbf77674/qrcode.min.js -->
   <script type="text/javascript" src="qrcode.min.js"></script>
-  <style type="text/css">
-    body {
-      font-family: monospace;
-      font-size: 14px;
-    }
-
-    div {
-      margin-bottom: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/bootstrap.min.css" media="screen"/>
+  <link rel="stylesheet" href="css/paperwallet.css" media="screen"/>
 </head>
 <body>
-
-<div id="public"></div>
-<div id="public_qr"></div>
-<div id="secret"></div>
-<div id="secret_qr"></div>
-
-<button onclick="generate()">Generate</button>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-5 col-sm-2">
+          <h1>Generate Paper Wallet</h1>
+          <div class="row align-items-center">
+              <button id="generatorButton" class="btn btn-default center-block" onclick="generate()">Generate</button>
+              <p id="messageText" class="lead">Click the generate button to create new public private keys/QR codes</p>
+          </div>
+          <div class="row align-items-center">
+            <div id="publicPanel" class="panel panel-success text-center" style="visibility:hidden">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Public Key</h3>
+              </div>
+              <div class="panel-body">
+                <div class="center-block" id="public_qr"></div>
+              </div>
+              <div class="panel-footer">
+                  <div id="public"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div id="privatePanel" class="panel panel-danger text-center" style="visibility:hidden">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Secret Key</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="center-block" id="secret_qr"></div>
+                </div>
+                <div class="panel-footer">
+                  <div id="secret"></div>
+                </div>
+            </div>
+          </div>  
+      </div>
+    </div>
+    <div class="row">
+      <hr/>
+    </div>
+    
+  </div>
 
 <script type="text/javascript">
   function generate() {
+    
+    
     var keypair = StellarBase.Keypair.random();
     document.getElementById("public").innerText = keypair.publicKey();
     document.getElementById("secret").innerText = keypair.secret();
@@ -37,6 +66,15 @@
 
     new QRCode(document.getElementById("public_qr"), keypair.publicKey());
     new QRCode(document.getElementById("secret_qr"), keypair.secret());
+    
+    document.getElementById("publicPanel").style.visibility = "visible";
+    document.getElementById("privatePanel").style.visibility = "visible";
+    document.getElementById("generatorButton").className  = "btn btn-default disabled";
+    document.getElementById("generatorButton").style.visibility = "hidden";
+    document.getElementById("generatorButton").onclick  = "";
+    document.getElementById("messageText").innerText= "Here are your new paper wallet keys.";
+
+
   }
 </script>
 

@@ -1,0 +1,8 @@
+img .center-block { display: block; margin-left: auto; margin-right: auto; }
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pwLight { background-color: white}
+.pwColor { background-color: #cef0fa}
